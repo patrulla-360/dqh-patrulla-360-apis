@@ -12,4 +12,5 @@ app.include_router(oficiales_router, prefix="/api/v1", tags=["Oficiales"])
 
 @app.get("/")
 def root():
-    return {"message": "Bienvenido a la API de oficiales"}
+    return {"message": "Bienvenido al panel de APIS"}
+
