@@ -24,8 +24,10 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: [
     'artifacts', 'docker', 'images', 'list',
-    '--repository=southamerica-east1-docker.pkg.dev/dqh-patrulla-360/dqh-artifact-registry-patrulla-360'
+    '--location=southamerica-east1',
+    '--repository=dqh-artifact-registry-patrulla-360'
   ]
+
 
 # Paso 3: Desplegar en Cloud Run
 - name: 'gcr.io/cloud-builders/gcloud'
