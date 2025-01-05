@@ -1,7 +1,7 @@
 steps:
 # Paso 1: Construir la imagen Docker
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'southamerica-east1-docker.pkg.dev/dqh-patrulla-360/dqh-artifact-registry-patrulla-360/api-oficiales', '.']
+  args: ['build', '-t', 'southamerica-east1-docker.pkg.dev/dqh-patrulla-360/dqh-artifact-registry-patrulla-360/api-oficiales', './api-oficiales']
 
 # Paso 2: Subir la imagen a Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
