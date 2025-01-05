@@ -19,3 +19,6 @@ steps:
 
 images:
 - 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/dqh-artifact-registry-patrulla-360/api-oficiales'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
