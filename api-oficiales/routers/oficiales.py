@@ -13,7 +13,7 @@ async def get_oficiales(db: AsyncSession = Depends(get_db)):
     try:
         query = text("SELECT * FROM USR_P360.MAE_OFICIAL")
         result = await db.execute(query)
-        oficiales = result.fetchall()
-        return [Oficial(**dict(oficial)) for oficial in oficiales]
+        oficiales = result.mappings().all()  # Usar mappings para convertir a diccionarios
+        return [Oficial(**oficial) for oficial in oficiales]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al obtener oficiales: {e}")
