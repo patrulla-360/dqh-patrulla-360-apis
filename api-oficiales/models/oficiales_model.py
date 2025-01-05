@@ -1,15 +1,14 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 
 class Oficial(BaseModel):
-    ID_OFICIAL: int
-    ID_USUARIO: Optional[int]
-    NOMBRE: str
-    APELLIDO: str
-    RANGO: Optional[str]
-    DNI: Optional[str]
-    ESTADO: Optional[str]
-    SEXO: Optional[str]
+    oficial_id: int
+    usuario_id: Optional[int]
+    nombre: str
+    apellido: str
+    rango: Optional[str]
+    dni: Optional[str]
+    estado: Optional[str]
+    sexo: Optional[str]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
