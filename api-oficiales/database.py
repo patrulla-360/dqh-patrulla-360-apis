@@ -5,7 +5,7 @@ import os
 # URL de conexión a PostgreSQL
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+asyncpg://postgres:cente110@A@34.39.130.83:5432/postgres"
+    "postgresql+asyncpg://postgres:cente110@/postgres?host=/cloudsql/dqh-patrulla-360:southamerica-east1:dqh-patrulla-postgres"
 )
 
 # Crear el motor de la base de datos
