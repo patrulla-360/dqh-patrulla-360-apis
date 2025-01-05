@@ -1,0 +1,21 @@
+steps:
+# Paso 1: Construir la imagen Docker
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/dqh-artifact-registry-patrulla-360/api-oficiales', '.']
+
+# Paso 2: Subir la imagen a Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/dqh-artifact-registry-patrulla-360/api-oficiales']
+
+# Paso 3: Desplegar en Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    [
+      'run', 'deploy', 'api-oficiales',
+      '--image', 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/dqh-artifact-registry-patrulla-360/api-oficiales',
+      '--region', 'southamerica-east1',
+      '--allow-unauthenticated'
+    ]
+
+images:
+- 'southamerica-east1-docker.pkg.dev/$PROJECT_ID/dqh-artifact-registry-patrulla-360/api-oficiales'
