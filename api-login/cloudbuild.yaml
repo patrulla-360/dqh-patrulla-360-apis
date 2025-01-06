@@ -1,0 +1,54 @@
+steps:
+# Paso 1: Construir la imagen Docker desde el subdirectorio
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t', 'southamerica-east1-docker.pkg.dev/dqh-patrulla-360/dqh-artifact-registry-patrulla-360/api-login',
+    '-f', 'api-login/Dockerfile',
+    'api-login'
+  ]
+
+# Paso 2: Subir la imagen a Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'southamerica-east1-docker.pkg.dev/dqh-patrulla-360/dqh-artifact-registry-patrulla-360/api-login']
+
+# Paso 3: Verificar que el repositorio de Artifact Registry existe y tiene acceso
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: [
+    'artifacts', 'repositories', 'describe',
+    'dqh-artifact-registry-patrulla-360',
+    '--location=southamerica-east1'
+  ]
+
+# Paso 4: Listar imágenes en el repositorio para verificar el push
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: [
+    'artifacts', 'docker', 'images', 'list',
+    'southamerica-east1-docker.pkg.dev/dqh-patrulla-360/dqh-artifact-registry-patrulla-360'
+  ]
+
+# Paso 5: Desplegar en Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    [
+      'run', 'deploy', 'api-login',
+      '--image', 'southamerica-east1-docker.pkg.dev/dqh-patrulla-360/dqh-artifact-registry-patrulla-360/api-login',
+      '--region', 'southamerica-east1',
+      '--allow-unauthenticated'
+    ]
+
+# Paso 6 (Opcional): Limpiar imágenes antiguas del repositorio si es necesario
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: [
+    'artifacts', 'docker', 'images', 'delete',
+    'southamerica-east1-docker.pkg.dev/dqh-patrulla-360/dqh-artifact-registry-patrulla-360/api-login',
+    '--quiet', '--delete-tags'
+  ]
+
+# Imágenes generadas por Cloud Build
+images:
+- 'southamerica-east1-docker.pkg.dev/dqh-patrulla-360/dqh-artifact-registry-patrulla-360/api-login'
+
+# Opciones de logging
+options:
+  logging: CLOUD_LOGGING_ONLY
